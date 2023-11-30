@@ -18,7 +18,9 @@ main :: proc() {
 	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_MAJOR_VERSION, 3)
 	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_MINOR_VERSION, 3)
 	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_PROFILE_MASK, gl.CONTEXT_CORE_PROFILE_BIT)
-	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_FLAGS, gl.CONTEXT_COMPATIBILITY_PROFILE_BIT)
+	when ODIN_OS == .Darwin {
+		sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_FLAGS, gl.CONTEXT_COMPATIBILITY_PROFILE_BIT)
+	}
 
 	window := sdl.CreateWindow(
 		"Odin SDL2 Demo",
