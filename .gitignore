@@ -1,0 +1,6 @@
+# Remove debug and binaries
+*.dSYM/
+learn-opengl-odin*
+
+# Remove ols which has information specific to each user
+ols.json
