@@ -6,24 +6,24 @@ import "core:strings"
 import "core:time"
 
 import gl "vendor:OpenGL"
-import SDL "vendor:sdl2"
+import sdl "vendor:sdl2"
 
 main :: proc() {
 	WINDOW_WIDTH :: 800
 	WINDOW_HEIGHT :: 600
 
-	SDL.Init({.VIDEO, .EVENTS})
-	defer SDL.Quit()
+	sdl.Init({.VIDEO, .EVENTS})
+	defer sdl.Quit()
 
-	SDL.GL_SetAttribute(SDL.GLattr.CONTEXT_MAJOR_VERSION, 3)
-	SDL.GL_SetAttribute(SDL.GLattr.CONTEXT_MINOR_VERSION, 3)
-	SDL.GL_SetAttribute(SDL.GLattr.CONTEXT_PROFILE_MASK, gl.CONTEXT_CORE_PROFILE_BIT)
-	SDL.GL_SetAttribute(SDL.GLattr.CONTEXT_FLAGS, gl.CONTEXT_COMPATIBILITY_PROFILE_BIT)
+	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_MAJOR_VERSION, 3)
+	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_MINOR_VERSION, 3)
+	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_PROFILE_MASK, gl.CONTEXT_CORE_PROFILE_BIT)
+	sdl.GL_SetAttribute(sdl.GLattr.CONTEXT_FLAGS, gl.CONTEXT_COMPATIBILITY_PROFILE_BIT)
 
-	window := SDL.CreateWindow(
+	window := sdl.CreateWindow(
 		"Odin SDL2 Demo",
-		SDL.WINDOWPOS_UNDEFINED,
-		SDL.WINDOWPOS_UNDEFINED,
+		sdl.WINDOWPOS_UNDEFINED,
+		sdl.WINDOWPOS_UNDEFINED,
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
 		{.OPENGL, .SHOWN},
@@ -32,16 +32,16 @@ main :: proc() {
 		fmt.eprintln("Failed to create window")
 		return
 	}
-	defer SDL.DestroyWindow(window)
+	defer sdl.DestroyWindow(window)
 
-	gl_context := SDL.GL_CreateContext(window)
-	defer SDL.GL_DeleteContext(gl_context)
+	gl_context := sdl.GL_CreateContext(window)
+	defer sdl.GL_DeleteContext(gl_context)
 	
 
-	SDL.GL_MakeCurrent(window, gl_context)
-	gl.load_up_to(3, 3, SDL.gl_set_proc_address)
+	sdl.GL_MakeCurrent(window, gl_context)
+	gl.load_up_to(3, 3, sdl.gl_set_proc_address)
 
-	SDL.GL_SetSwapInterval(1)
+	sdl.GL_SetSwapInterval(1)
 	gl.Viewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
 
 	vertices := [?]f32 {
@@ -82,13 +82,13 @@ main :: proc() {
 		gl.BindVertexArray(vao)
 		gl.DrawArrays(gl.TRIANGLES, 0, 3)
 
-		SDL.GL_SwapWindow(window)
+		sdl.GL_SwapWindow(window)
 	}
 }
 
 process_events :: proc() -> bool {
-	event: SDL.Event
-	for SDL.PollEvent(&event) {
+	event: sdl.Event
+	for sdl.PollEvent(&event) {
 		// #partial switch tells the compiler not to error if every case is not present
 		#partial switch event.type {
 		case .KEYDOWN:
